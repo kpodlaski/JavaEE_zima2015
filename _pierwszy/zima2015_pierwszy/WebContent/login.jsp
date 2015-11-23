@@ -12,6 +12,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+
+$( document ).ready(function() {
+
+	$( "form" ).submit(function( event ) {
+		  var pass = $('#passwd').val();
+		  var token = $('#token').val();
+		  var hash = CryptoJS.SHA256(pass+":"+token);
+		  $('#passwd').val(hash);
+		});
+	});	
+	
+
+</script>
 </head>
 <body>
 
@@ -36,9 +52,10 @@
 	}
 %>
 
-<form method="post" action="login.jsp">
+<form id="loginForm" method="post" action="login.jsp">
+<input type="hidden" name="token" id="token" value="<%="token_value"%>"/>
 Login : <input type="text" name="username"/></br>
-Hasło : <input type="password" name="password"/></br>
+Hasło : <input id="passwd" type="password" name="password"/></br>
 <input type="submit" value="Login"/>
 </form>
 </body>
