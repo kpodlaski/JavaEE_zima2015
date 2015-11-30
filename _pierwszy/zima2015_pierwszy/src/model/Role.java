@@ -2,7 +2,7 @@ package model;
 
 public class Role {
 	static private int lastId =1;
-	private int id;
+	private int id=-1;
 	private String name;
 	
 	

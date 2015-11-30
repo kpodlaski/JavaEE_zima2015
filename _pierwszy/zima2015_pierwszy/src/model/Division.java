@@ -7,7 +7,7 @@ public class Division {
 	
 	static private int lastId =1;
 	
-	private int id;
+	private int id =-1;
 	private String name;
 	private Person head;
 	private List<Person> members;

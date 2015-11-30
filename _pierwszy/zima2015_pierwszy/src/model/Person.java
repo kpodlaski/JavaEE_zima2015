@@ -5,7 +5,7 @@ public class Person {
 	private String name;
 	private String surname;
 	private String photo;
-	private int id;
+	private int id = -1;
 	private Role role;
 	
 	
