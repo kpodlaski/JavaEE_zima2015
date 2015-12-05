@@ -47,6 +47,15 @@ public class Person {
 		this.id = lastId++;
 		this.role = role;
 	}
+	public Person() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return String.format(
+				"Person [%s %s %s , %s, %s]", id, name,
+				surname, role, photo);
+	}
 	
 	
 }

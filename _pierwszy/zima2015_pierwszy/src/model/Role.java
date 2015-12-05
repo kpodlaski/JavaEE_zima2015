@@ -1,5 +1,7 @@
 package model;
 
+
+
 public class Role {
 	static private int lastId =1;
 	private int id=-1;
@@ -23,5 +25,13 @@ public class Role {
 		this.id = lastId++;
 		this.name = name;
 	}
+	public Role() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return String.format("%s %s", id, name);
+	}
 
+	
 }

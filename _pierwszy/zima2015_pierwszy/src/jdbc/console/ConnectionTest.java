@@ -46,6 +46,18 @@ public class ConnectionTest {
 			
 		}
 		System.out.println("==============================");
+		pst = con
+				.prepareStatement("Select * From Osoba where id>=?");
+			
+			pst.setInt(1,0);  //Fill the parameter ?
+			pst.execute();
+			rs = pst.getResultSet();
+			while (rs.next()){
+				System.out.print(rs.getInt(1));
+				System.out.println(" "+rs.getString("Nazwisko"));
+				
+			}
+			System.out.println("==============================");
 		ResultSetMetaData meta = rs.getMetaData();
         for (int i=1; i<=meta.getColumnCount();i++)
            System.out.println(meta.getColumnName(i)+":"+meta.getColumnTypeName(i));

@@ -65,6 +65,10 @@ public class Division {
 	
 	
 	public Division(){}
+	@Override
+	public String toString() {
+		return String.format("%s, %s", id, name);
+	}
 	
 	/*public copyData(Division source){
 		

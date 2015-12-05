@@ -1,25 +1,21 @@
 package data.daos;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import model.Division;
 import model.Person;
 
-public class DAOPerson {
+public interface DAOPerson {
 
-	public Person getPersonByID(int id){
-		return null;
-	}
-	public List<Person> getPersons(){
-		return null;
-	}
-	public boolean updatePerson(Person p){
-		return false;
-	}
-	public boolean insertPerson(Person p){
-		return false;
-	}
+	public Person getPersonByID(int id) throws SQLException;
+
+	public List<Person> getPersons() throws SQLException;
 	
-	public  static void main(String[] a){
-		
-	}
+	public List<Person> getPersonsInDivison(Division d) throws SQLException;
+
+	public boolean updatePerson(Person p);
+
+	public boolean insertPerson(Person p);
+
 }
