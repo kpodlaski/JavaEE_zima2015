@@ -64,10 +64,10 @@ public class  DAO {
 		public boolean insertPerson(Person p) {
 			return daoPerson.insertPerson(p);
 		}
-		public Division getDivisionByID(int id) {
+		public Division getDivisionByID(int id) throws SQLException {
 			return daoDivision.getDivisionByID(id);
 		}
-		public List<Division> getDivisions() {
+		public List<Division> getDivisions() throws SQLException {
 			return daoDivision.getDivisions();
 		}
 		public boolean updateDivision(Division p) {

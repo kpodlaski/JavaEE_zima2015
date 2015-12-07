@@ -14,11 +14,17 @@ import data.daos.DAORole;
 
 public class DAORoleImpl implements DAORole {
 
-	DAO dao;
+	private DAO dao;
 	public DAORoleImpl(DAO dao) {
 		this.dao=dao;
 	}
 
+	private Role createRoleFromResultSet(ResultSet rs) throws SQLException{
+		Role r = new Role();
+		r.setId(rs.getInt("id"));
+		r.setName(rs.getString("Nazwa"));
+		return r;
+	}
 	@Override
 	public Role getRoleByID(int id) throws SQLException {
 		Connection con  = DAO.getConnection();
@@ -28,10 +34,7 @@ public class DAORoleImpl implements DAORole {
 		Role r = null;
 		ResultSet rs = null;
 		if (pst.execute() && (rs=pst.getResultSet()).next()){
-			
-			r = new Role();
-			r.setId(id);
-			r.setName(rs.getString("Nazwa"));
+			r = createRoleFromResultSet(rs);
 		}		
 		return r;
 	}
@@ -45,12 +48,9 @@ public class DAORoleImpl implements DAORole {
 		ResultSet rs = null;
 		if (pst.execute()){
 			rs = pst.getResultSet();
-			while (rs.next()){
-			
-			Role r = new Role();
-			r.setId(rs.getInt("Id"));
-			r.setName(rs.getString("Nazwa"));
-			roles.add(r);
+			while (rs.next()){		
+				Role r = createRoleFromResultSet(rs);
+				roles.add(r);
 			}		
 		}
 		return roles;

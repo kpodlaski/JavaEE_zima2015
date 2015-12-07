@@ -19,7 +19,17 @@ public class DAOPersonImpl implements DAOPerson {
 		this.dao = dao;
 	}
 	
-	DAO dao;
+	private DAO dao;
+	
+	private Person createPersonFromResultSet(ResultSet rs) throws SQLException{
+		Person p = new Person();
+		p.setId(rs.getInt("id"));
+		p.setName(rs.getString("Imie"));
+		p.setSurname(rs.getString("Nazwisko"));
+		p.setPhoto(rs.getString("Fotka"));
+		p.setRole(dao.getRoleByID(rs.getInt("Stanowisko")));
+		return p;
+	}
 	/* (non-Javadoc)
 	 * @see data.daos.DAOPerson#getPersonByID(int)
 	 */
@@ -32,12 +42,7 @@ public class DAOPersonImpl implements DAOPerson {
 		Person p = null;
 		ResultSet rs = null;
 		if (pst.execute() && (rs=pst.getResultSet()).next()){			
-			p = new Person();
-			p.setId(id);
-			p.setName(rs.getString("Imie"));
-			p.setSurname(rs.getString("Nazwisko"));
-			p.setPhoto(rs.getString("Fotka"));
-			p.setRole(dao.getRoleByID(rs.getInt("Stanowisko")));
+			p = createPersonFromResultSet(rs);
 		}		
 		return p;
 	}
@@ -54,14 +59,8 @@ public class DAOPersonImpl implements DAOPerson {
 		if (pst.execute()){ 
 			rs=pst.getResultSet();
 			while(rs.next()){			
-			
-			Person	p = new Person();
-			p.setId(rs.getInt("id"));
-			p.setName(rs.getString("Imie"));
-			p.setSurname(rs.getString("Nazwisko"));
-			p.setPhoto(rs.getString("Fotka"));
-			p.setRole(dao.getRoleByID(rs.getInt("Stanowisko")));
-			persons.add(p);
+				Person	p = createPersonFromResultSet(rs);
+				persons.add(p);
 			}		
 		}
 		return persons;
@@ -93,15 +92,9 @@ public class DAOPersonImpl implements DAOPerson {
 		ResultSet rs = null;
 		if (pst.execute()){ 
 			rs=pst.getResultSet();
-			while(rs.next()){			
-			
-			Person	p = new Person();
-			p.setId(rs.getInt("id"));
-			p.setName(rs.getString("Imie"));
-			p.setSurname(rs.getString("Nazwisko"));
-			p.setPhoto(rs.getString("Fotka"));
-			p.setRole(dao.getRoleByID(rs.getInt("Stanowisko")));
-			persons.add(p);
+			while(rs.next()){						
+				Person	p = createPersonFromResultSet(rs);
+				persons.add(p);
 			}		
 		}
 		return persons;
