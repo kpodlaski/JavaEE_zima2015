@@ -27,7 +27,7 @@ public class DAORoleImpl implements DAORole {
 	}
 	@Override
 	public Role getRoleByID(int id) throws SQLException {
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM STANOWISKO where id=?");
 		pst.setInt(1, id);
@@ -35,13 +35,14 @@ public class DAORoleImpl implements DAORole {
 		ResultSet rs = null;
 		if (pst.execute() && (rs=pst.getResultSet()).next()){
 			r = createRoleFromResultSet(rs);
-		}		
+		}	
+		//con.close();
 		return r;
 	}
 
 	@Override
 	public List<Role> getRoles() throws SQLException {
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM STANOWISKO");
 		List<Role> roles = new ArrayList<Role>();
@@ -53,6 +54,7 @@ public class DAORoleImpl implements DAORole {
 				roles.add(r);
 			}		
 		}
+		//con.close();
 		return roles;
 	}
 
@@ -69,7 +71,7 @@ public class DAORoleImpl implements DAORole {
 	}
 	
 	public static void main(String ... s) throws SQLException{
-		DAO dao = new DAO();
+		DAO dao = new DAOImpl();
 		Role r = dao.getRoleByID(2);
 		System.out.println(r.getId()+ " "+r.getName());
 		System.out.println("====================");

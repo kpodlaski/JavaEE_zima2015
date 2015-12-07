@@ -28,6 +28,7 @@ public class DAOPersonImpl implements DAOPerson {
 		p.setSurname(rs.getString("Nazwisko"));
 		p.setPhoto(rs.getString("Fotka"));
 		p.setRole(dao.getRoleByID(rs.getInt("Stanowisko")));
+		//dao.daoRole.getRoleByID(rs.getInt("Stanowisko"));
 		return p;
 	}
 	/* (non-Javadoc)
@@ -35,7 +36,7 @@ public class DAOPersonImpl implements DAOPerson {
 	 */
 	@Override
 	public Person getPersonByID(int id) throws SQLException{
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM Osoba where id=?");
 		pst.setInt(1, id);
@@ -44,6 +45,7 @@ public class DAOPersonImpl implements DAOPerson {
 		if (pst.execute() && (rs=pst.getResultSet()).next()){			
 			p = createPersonFromResultSet(rs);
 		}		
+		//con.close();
 		return p;
 	}
 	/* (non-Javadoc)
@@ -51,7 +53,7 @@ public class DAOPersonImpl implements DAOPerson {
 	 */
 	@Override
 	public List<Person> getPersons() throws SQLException{
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM Osoba");
 		List<Person> persons = new ArrayList<>();
@@ -63,6 +65,7 @@ public class DAOPersonImpl implements DAOPerson {
 				persons.add(p);
 			}		
 		}
+		//con.close();
 		return persons;
 	}
 	/* (non-Javadoc)
@@ -83,7 +86,7 @@ public class DAOPersonImpl implements DAOPerson {
 	@Override
 	public List<Person> getPersonsInDivison(Division d) throws SQLException {
 		// TODO Auto-generated method stub
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM Osoba, OS_JEDN_LNK Where id=id_osoba AND id_jedn = ?");
 		
@@ -97,11 +100,12 @@ public class DAOPersonImpl implements DAOPerson {
 				persons.add(p);
 			}		
 		}
+		//con.close();
 		return persons;
 	}
 	
 	public static void main(String ... s) throws SQLException{
-		DAO dao = new DAO();
+		DAO dao = new DAOImpl();
 		Person p = dao.getPersonByID(5);
 		System.out.println(p);
 		System.out.println("===================");

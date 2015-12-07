@@ -1,92 +1,42 @@
 package data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import data.daos.DAODivision;
-import data.daos.DAOPerson;
-import data.daos.DAORole;
-import data.daos.implementations.DAODivisionImpl;
-import data.daos.implementations.DAOPersonImpl;
-import data.daos.implementations.DAORoleImpl;
-import model.*;
+import model.Division;
+import model.Person;
+import model.Role;
 
-public class  DAO {
-		public static String conString = "jdbc:oracle:thin:@oradb.pi.uni.lodz.pl:1521:orcl";
-		public static String userName = "javastudent";
-		public static String passwd = "p@ssw0rd";
-	
-		//Static Constructor 
-		{
-			try {
-	            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-	        }
-	        catch (Exception ex) {   
-	        	ex.printStackTrace();
-	        	System.exit(1);
-	        }
-		}
-		
-		private static Connection con = null;
-		public static Connection getConnection() throws SQLException{
-			if (con == null) {
-				con = DriverManager
-			.getConnection("jdbc:oracle:thin:@oradb.pi.uni.lodz.pl:1521:orcl", "javastudent", "p@ssw0rd");
-			}
-			return con;
-		}
-		
-		DAOPerson daoPerson = null;
-		DAODivision daoDivision = null;
-		DAORole daoRole = null;	
-		
-		public DAO(){
-			daoPerson = new DAOPersonImpl(this);
-			daoRole = new DAORoleImpl(this);
-			daoDivision  = new DAODivisionImpl(this);
-		}
-		
-		public Person getPersonByID(int id) throws SQLException {
-				return daoPerson.getPersonByID(id);
-		}
-		public List<Person> getPersons() throws SQLException {
-			return daoPerson.getPersons();
-		}
-		public List<Person> getPersonsInDivision(Division d) throws SQLException {
-			return daoPerson.getPersonsInDivison(d);
-		}
-		
-		public boolean updatePerson(Person p) {
-			return daoPerson.updatePerson(p);
-		}
-		public boolean insertPerson(Person p) {
-			return daoPerson.insertPerson(p);
-		}
-		public Division getDivisionByID(int id) throws SQLException {
-			return daoDivision.getDivisionByID(id);
-		}
-		public List<Division> getDivisions() throws SQLException {
-			return daoDivision.getDivisions();
-		}
-		public boolean updateDivision(Division p) {
-			return daoDivision.updateDivision(p);
-		}
-		public boolean insertDivision(Division p) {
-			return daoDivision.insertDivision(p);
-		}
-		public Role getRoleByID(int id) throws SQLException {
-			return daoRole.getRoleByID(id);
-		}
-		public List<Role> getRoles() throws SQLException {
-			return daoRole.getRoles();
-		}
-		public boolean updateRole(Role p) {
-			return daoRole.updateRole(p);
-		}
-		public boolean insertRole(Role p) {
-			return daoRole.insertRole(p);
-		}
-		
+public interface DAO {
+
+	public abstract Person getPersonByID(int id) throws SQLException;
+
+	public abstract List<Person> getPersons() throws SQLException;
+
+	public abstract List<Person> getPersonsInDivision(Division d)
+			throws SQLException;
+
+	public abstract boolean updatePerson(Person p);
+
+	public abstract boolean insertPerson(Person p);
+
+	public abstract Division getDivisionByID(int id) throws SQLException;
+
+	public abstract List<Division> getDivisions() throws SQLException;
+
+	public abstract boolean updateDivision(Division p);
+
+	public abstract boolean insertDivision(Division p);
+
+	public abstract Role getRoleByID(int id) throws SQLException;
+
+	public abstract List<Role> getRoles() throws SQLException;
+
+	public abstract boolean updateRole(Role p);
+
+	public abstract boolean insertRole(Role p);
+
+	public abstract List<Person> getPersonsInDivison(Division d)
+			throws SQLException;
+
 }

@@ -28,7 +28,7 @@ public class DAODivisionImpl implements DAODivision {
 	}
 	@Override
 	public Division getDivisionByID(int id) throws SQLException {
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM Jednostka where id=?");
 		pst.setInt(1, id);
@@ -37,12 +37,13 @@ public class DAODivisionImpl implements DAODivision {
 		if (pst.execute() && (rs=pst.getResultSet()).next()){
 			d = createDivisionFromResultSet(rs);
 		}		
+		//con.close();
 		return d;
 	}
 
 	@Override
 	public List<Division> getDivisions() throws SQLException {
-		Connection con  = DAO.getConnection();
+		Connection con  = DAOImpl.getConnection();
 		PreparedStatement pst = con.prepareStatement(
 				"Select * FROM Jednostka");
 		List<Division> divs = new ArrayList<Division>();
@@ -54,6 +55,7 @@ public class DAODivisionImpl implements DAODivision {
 				divs.add(d);
 			}		
 		}
+		//con.close();
 		return divs;
 	}
 
